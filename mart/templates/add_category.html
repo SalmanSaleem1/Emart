@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="sign-in">
+    <div class="signin-content">
+        <div class="signin-image">
+            <center>
+                <div class="card" style="width: 25rem;">
+                    <div class="card-body">
+                        <form method="post" style="text-align: center">
+
+                            {{ form.hidden_tag() }}
+                            <fieldset>
+                                <legend>Add Category</legend>
+                                <div class="form-group">
+                                    {{ form.name(placeholder="Your Category", style="text-align: center") }}
+                                </div>
+                            </fieldset>
+                            <br>
+                            <div class="form-group">
+                                {{ form.submit(class="btn btn-primary")}}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </center>
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

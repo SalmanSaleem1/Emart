@@ -1,0 +1,25 @@
+class Constant(object):
+    GET = "GET"
+    POST = "POST"
+    REGISTER_SUCCESSFULLY = "Register Successfully"
+    LOGIN_SUCCESSFULLY = "Login Successfully"
+    INFO_FLASH_MESSAGE = "info"
+    INVALID_EMAIL_OR_PASSWORD = "Invalid email or password"
+    RESET_PASSWORD_EMAIL_SEND = "An email has been sent with instructions to reset your password."
+    EXPIRE_TOKEN = "That is an invalid or expired token"
+    PASSWORD_UPDATE = "Your password has been updated! You are now able to log in"
+    USER_NAME_ALREADY_EXIST = "User Name is already exist"
+    EMAIL_ALREADY_EXIST = "Email is already exist"
+    EMAIL_DOES_NOT_EXIST = "Email does not exist"
+    EMAIL = 'Email'
+    USER_NAME = 'User Name'
+    NAME = 'Name'
+    PASSWORD = 'Password'
+    CONFIRM_PASSWORD = "Confirm Password"
+    RESET_PASSWORD = "Reset Password"
+    SUBMIT = "Submit"
+    INVALID_TOKEN = "Invalid or expire token"
+    DANGER = 'danger'
+    SUCCESS = 'success'
+    SAVE_CATEGORY = 'Category Saved'
+    NAME_ALREADY_EXIST = "Name already exist"
