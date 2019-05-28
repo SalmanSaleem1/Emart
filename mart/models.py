@@ -2,6 +2,7 @@ from mart import *
 from flask_login import UserMixin
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from datetime import datetime
+from mart.utils import QueryWithSoftDelete
 
 
 @login.user_loader
@@ -39,6 +40,7 @@ class Categories(db.Model):
     name = db.Column(db.String(60), unique=True, nullable=False)
     image_file = db.Column(db.String(125), default='default.jpg')
     create_at = db.Column(db.DateTime, default=datetime.utcnow())
+    deleted = db.Column(db.Boolean(), default=True)
 
     def __repr__(self):
         return f"(Category('{self.name}', '{self.image_file}', '{self.create_at}'))"
@@ -46,9 +48,11 @@ class Categories(db.Model):
 
 class SubCategories(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(60), unique=True, nullable=False)
+    name = db.Column(db.String(60), nullable=False)
     image_file = db.Column(db.String(125), default='default.jpg')
     create_at = db.Column(db.DateTime, default=datetime.utcnow())
+    deleted = db.Column(db.Boolean(), default=True)
+    categories_id = db.Column(db.String(100), db.ForeignKey('categories.name'))
 
     def __repr__(self):
-        return f"(SubCategories('{self.name}', '{self.image_file}', '{self.create_at}'))"
+        return f"(SubCategories('{self.name}', '{self.image_file}', '{self.create_at}', '{self.categories_id}', '{self.deleted}'))"

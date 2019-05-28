@@ -1,40 +1,101 @@
 {% extends 'base.html' %}
 {% block content %}
-<section class="sign-in">
-    <div class="signin-content">
-        <div class="signin-image">
-            <center>
-                <div class="card" style="width: 25rem;">
-                    <div class="card-body">
-                        <form method="post" style="text-align: center">
-
-                            {{ form.hidden_tag() }}
-                            <fieldset>
-                                <legend>Add Sub Category</legend>
+    <section class="sign-in">
+        <div class="signin-content">
+            <div class="signin-image">
+                <center>
+                    <div class="card" style="width: 25rem;">
+                        <div class="card-body">
+                            <form method="post" style="text-align: center">
+                                {{ form.hidden_tag() }}
+                                <fieldset>
+                                    <legend>Add Sub Category</legend>
+                                    <div class="form-group">
+                                        <select name="select_value" class="btn btn-success dropdown-toggle btn-sm"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            {% for cat in categories %}
+                                                <option>{{ cat.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        {{ form.subcat_name(placeholder="Your Category", style="text-align: center") }}
+                                    </div>
+                                </fieldset>
+                                <br>
                                 <div class="form-group">
-                                    <select>
-                                        <option value="volvo">Volvo</option>
-                                        <option value="saab">Saab</option>
-                                        <option value="mercedes">Mercedes</option>
-                                        <option value="audi">Audi</option>
-                                    </select>
+                                    {{ form.submit(class="btn btn-primary") }}
                                 </div>
-                                <div class="form-group">
-                                    {{ form.subcat_name(placeholder="Your Category", style="text-align: center") }}
-                                </div>
-                            </fieldset>
-                            <br>
-                            <div class="form-group">
-                                {{ form.submit(class="btn btn-primary")}}
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
-                </div>
-            </center>
+                </center>
+            </div>
+
         </div>
 
+    </section>
+    <h4>Sub category table</h4>
+    <hr>
+    <div class="table-wrapper-scroll-y my-custom-scrollbar">
+
+        <table class="table table-bordered table-striped mb-0">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Categories</th>
+                <th scope="col">Sub Categories</th>
+                <th scope="col">Image</th>
+                <th scope="col">Create At</th>
+                <th scope="col">Actions</th>
+                <th scope="col">Active/InActive</th>
+
+            </tr>
+            </thead>
+            {% for sub_cat in sub_catagories %}
+                <tbody>
+                <tr>
+                    <th scope="row">{{ sub_cat.id }}</th>
+                    <td>{{ sub_cat.categories_id }}</td>
+                    <td>{{ sub_cat.name }}</td>
+                    <td>{{ sub_cat.image_file }}</td>
+                    <td>{{ sub_cat.create_at.strftime('%Y, %m, %d') }}</td>
+                    <td style="text-align: center">
+                        {% if sub_cat.deleted == False %}
+
+                            <a href="{{ url_for('categ.delete_sub_cat', id=sub_cat.id) }}"><i class="fas fa-trash"></i></a>
+                            <a href=""><i class="fas fa-pen-square"></i></a>
+
+                        {% else %}
+
+                            <a href="{{ url_for('categ.delete_sub_cat', id=sub_cat.id) }}"><i class="fas fa-trash"></i></a>
+                            <a href=""><i class="fas fa-pen-square"></i></a>
+
+
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if sub_cat.deleted == False %}
+                            <a href="{{ url_for('categ.active_sub_cat', id=sub_cat.id) }}">Active</a>
+                        {% else %}
+                            <a href="{{ url_for('categ.active_sub_cat', id=sub_cat.id) }}">InActive</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                </tbody>
+            {% endfor %}
+        </table>
+
     </div>
+    <style>
+        .my-custom-scrollbar {
+            position: relative;
+            height: 200px;
+            overflow: auto;
+        }
 
-</section>
-
+        .table-wrapper-scroll-y {
+            display: block;
+        }
+    </style>
 {% endblock %}

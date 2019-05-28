@@ -23,3 +23,4 @@ class Constant(object):
     SUCCESS = 'success'
     SAVE_CATEGORY = 'Category Saved'
     NAME_ALREADY_EXIST = "Name already exist"
+    DELETE_SUCCESSFULLY = "Delete Successfully."

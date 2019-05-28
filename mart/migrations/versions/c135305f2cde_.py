@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: d90338735478
+Revision ID: c135305f2cde
 Revises: 
-Create Date: 2019-05-27 16:20:01.341313
+Create Date: 2019-05-28 16:54:08.069809
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'd90338735478'
+revision = 'c135305f2cde'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -23,6 +23,7 @@ def upgrade():
     sa.Column('name', sa.String(length=60), nullable=False),
     sa.Column('image_file', sa.String(length=125), nullable=True),
     sa.Column('create_at', sa.DateTime(), nullable=True),
+    sa.Column('deleted', sa.Boolean(), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('name')
     )
@@ -41,10 +42,10 @@ def upgrade():
     sa.Column('name', sa.String(length=60), nullable=False),
     sa.Column('image_file', sa.String(length=125), nullable=True),
     sa.Column('create_at', sa.DateTime(), nullable=True),
-    sa.Column('category_id', sa.String(length=100), nullable=True),
-    sa.ForeignKeyConstraint(['category_id'], ['categories.name'], ),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('name')
+    sa.Column('deleted', sa.Boolean(), nullable=True),
+    sa.Column('categories_id', sa.String(length=100), nullable=True),
+    sa.ForeignKeyConstraint(['categories_id'], ['categories.name'], ),
+    sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###
 

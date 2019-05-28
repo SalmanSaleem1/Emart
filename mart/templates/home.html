@@ -2,12 +2,63 @@
 {% block content %}
 
 
-<section class="sign-in">
+    <section class="sign-in">
         <div class="signin-content">
-           <h1>Salman</h1>
-        </div>
+            <center>
 
-</section>
+
+                <div class="table-wrapper-scroll-y my-custom-scrollbar">
+
+                    <table class="table table-bordered table-striped mb-0">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Categories</th>
+                            <th scope="col">Sub Categories</th>
+                            <th scope="col">Image</th>
+                            <th scope="col">Create At</th>
+                            <th scope="col">Image</th>
+                            <th scope="col">Action</th>
+
+                        </tr>
+                        </thead>
+                        {% for sub_cat in sub_cat %}
+                            <tbody>
+                            <tr>
+                                <th scope="row">{{ sub_cat.id }}</th>
+                                <td>{{ sub_cat.categories_id }}</td>
+                                <td>{{ sub_cat.name }}</td>
+                                <td>{{ sub_cat.image_file }}</td>
+                                <td>{{ sub_cat.create_at.strftime('%Y, %m, %d') }}</td>
+                                <td><img src="{{ url_for('static', filename='images/signup-image.jpg' ) }}"
+                                         class="account-img rounded-circle"></td>
+                                <td style="text-align: center">
+                                    {% if sub_cat.deleted == False %}
+                                        <a>Active</a>
+                                    {% else %}
+                                        <a>InActive</a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            </tbody>
+                        {% endfor %}
+                    </table>
+
+                </div>
+            </center>
+            <style>
+                .my-custom-scrollbar {
+                    position: relative;
+                    height: 200px;
+                    overflow: auto;
+                }
+
+                .table-wrapper-scroll-y {
+                    display: block;
+                }
+            </style>
+    </section>
+
 
 
 {% endblock %}

@@ -1,32 +1,76 @@
 {% extends 'base.html' %}
 {% block content %}
-<section class="sign-in">
-    <div class="signin-content">
-        <div class="signin-image">
-            <center>
-                <div class="card" style="width: 25rem;">
-                    <div class="card-body">
-                        <form method="post" style="text-align: center">
+    <section class="sign-in">
+        <div class="signin-content">
+            <div class="signin-image">
+                <center>
+                    <div class="card" style="width: 25rem;">
+                        <div class="card-body">
+                            <form method="post" style="text-align: center">
 
-                            {{ form.hidden_tag() }}
-                            <fieldset>
-                                <legend>Add Category</legend>
+                                {{ form.hidden_tag() }}
+                                <fieldset>
+                                    <legend>Add Category</legend>
+                                    <div class="form-group">
+                                        {{ form.name(placeholder="Your Category", style="text-align: center") }}
+                                    </div>
+                                </fieldset>
+                                <br>
                                 <div class="form-group">
-                                    {{ form.name(placeholder="Your Category", style="text-align: center") }}
+                                    {{ form.submit(class="btn btn-primary") }}
                                 </div>
-                            </fieldset>
-                            <br>
-                            <div class="form-group">
-                                {{ form.submit(class="btn btn-primary")}}
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
-                </div>
-            </center>
+                </center>
+            </div>
+
         </div>
 
+    </section>
+    <div class="table-wrapper-scroll-y my-custom-scrollbar">
+
+        <table class="table table-bordered table-striped mb-0">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Categories</th>
+                <th scope="col">Image</th>
+                <th scope="col">Create At</th>
+                <th scope="col">Action</th>
+
+            </tr>
+            </thead>
+            {% for cat in categories %}
+                <tbody>
+                <tr>
+                    <th scope="row">{{ cat.id }}</th>
+                    <td>{{ cat.name }}</td>
+                    <td>{{ cat.image_file }}</td>
+                    <td>{{ cat.create_at.strftime('%Y, %m, %d') }}</td>
+                    <td style="text-align: center">
+                            {% if cat.deleted == False %}
+
+                                <a href="{{ url_for('categ.active_sub_cat', id=cat.id) }}">Active</a>
+                            {% else %}
+                                <a href="{{ url_for('categ.active_sub_cat', id=cat.id)}}">InActive</a>
+                            {% endif %}
+                        </td>
+                </tr>
+                </tbody>
+            {% endfor %}
+        </table>
+
     </div>
+    <style>
+        .my-custom-scrollbar {
+            position: relative;
+            height: 200px;
+            overflow: auto;
+        }
 
-</section>
-
+        .table-wrapper-scroll-y {
+            display: block;
+        }
+    </style>
 {% endblock %}
