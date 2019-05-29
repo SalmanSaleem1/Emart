@@ -20,7 +20,21 @@ class Constant(object):
     SUBMIT = "Submit"
     INVALID_TOKEN = "Invalid or expire token"
     DANGER = 'danger'
-    SUCCESS = 'success'
+    FLASH_MESSAGE_SUCCESS = 'success'
     SAVE_CATEGORY = 'Category Saved'
     NAME_ALREADY_EXIST = "Name already exist"
     DELETE_SUCCESSFULLY = "Delete Successfully."
+    UPDATE_SUCCESSFULLY = "Update Successfully"
+    UPLOAD_IMAGE = "Upload image"
+    IMAGE_FILED_EMPTY = "Image preview is empty"
+    SAVE_SUCCESSFULLY = "Save Successfully"
+
+
+class Product():
+    NAME = "Name"
+    TOTAL_QUANTITY = "Total Quantity"
+    UNIT = "Unit"
+    IMAGE = "Image Upload"
+    DESCRIPTION = "Description"
+    NET_PRICE = "Net Price"
+    SALE_PRICE = "Sale Price"

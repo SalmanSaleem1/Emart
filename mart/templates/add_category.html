@@ -6,13 +6,38 @@
                 <center>
                     <div class="card" style="width: 25rem;">
                         <div class="card-body">
-                            <form method="post" style="text-align: center">
-
+                            <form method="post" style="text-align: center" enctype="multipart/form-data"
+                                  autocomplete="off">
                                 {{ form.hidden_tag() }}
                                 <fieldset>
-                                    <legend>Add Category</legend>
-                                    <div class="form-group">
-                                        {{ form.name(placeholder="Your Category", style="text-align: center") }}
+                                    <legend>{{ legend }}</legend>
+                                    <div class="form-group" style="text-align: center">
+                                        {% if form.name.errors %}
+                                            {{ form.name(placeholder="Your Category", style="text-align: center") }}
+                                            {% for error in form.name.errors %}
+                                                <div class="alert-message block-message error">
+                                        <span class="badge badge-danger">
+                                            {{ error }}
+                                        </span>
+                                                </div>
+                                            {% endfor %}
+                                        {% else %}
+                                            {{ form.name(placeholder="Your Category", style="text-align: center") }}
+                                        {% endif %}
+                                    </div>
+                                    <div class="file-upload-wrapper">
+                                        {% if form.image_file.errors %}
+                                            {{ form.image_file(placeholder="Product name", class="file_upload") }}
+                                            {% for error in form.image_file.errors %}
+                                                <div class="alert-message block-message error">
+                                                    <span class="badge badge-danger">
+                                                        {{ error }}
+                                                    </span>
+                                                </div>
+                                            {% endfor %}
+                                        {% else %}
+                                            {{ form.image_file(placeholder="Product name", class="file_upload") }}
+                                        {% endif %}
                                     </div>
                                 </fieldset>
                                 <br>
@@ -37,7 +62,8 @@
                 <th scope="col">Categories</th>
                 <th scope="col">Image</th>
                 <th scope="col">Create At</th>
-                <th scope="col">Action</th>
+                <th scope="col">Actions</th>
+                <th scope="col">Status</th>
 
             </tr>
             </thead>
@@ -46,22 +72,35 @@
                 <tr>
                     <th scope="row">{{ cat.id }}</th>
                     <td>{{ cat.name }}</td>
-                    <td>{{ cat.image_file }}</td>
+                    <td><img src="{{ url_for('static', filename='images/' + cat.image_file) }}"
+                             class="account-img rounded-circle"></td>
                     <td>{{ cat.create_at.strftime('%Y, %m, %d') }}</td>
-                    <td style="text-align: center">
-                            {% if cat.deleted == False %}
+                    <td>
+                        <div style="text-align: center">
+                            <a href="{{ url_for('categ.delete_cat', my_cat_id=cat.id) }}"><i
+                                    class="fas fa-trash"></i></a>
+                            <a href="{{ url_for('categ.update_cat', my_cat_id=cat.id) }}"><i
+                                    class="fas fa-pen-square"></i></a>
+                        </div>
 
-                                <a href="{{ url_for('categ.active_sub_cat', id=cat.id) }}">Active</a>
-                            {% else %}
-                                <a href="{{ url_for('categ.active_sub_cat', id=cat.id)}}">InActive</a>
-                            {% endif %}
-                        </td>
+                    </td>
+                    <td style="text-align: center">
+                        {% if cat.deleted == False %}
+
+                            <a href="{{ url_for('categ.active_action', id=cat.id) }}">Active <i
+                                    class="fas fa-flag"></i></a>
+                        {% else %}
+                            <a href="{{ url_for('categ.active_action', id=cat.id) }}">In Active <i
+                                    class="far fa-flag"></i></a>
+                        {% endif %}
+                    </td>
                 </tr>
                 </tbody>
             {% endfor %}
         </table>
-
     </div>
+    <br>
+    <br>
     <style>
         .my-custom-scrollbar {
             position: relative;
@@ -73,4 +112,6 @@
             display: block;
         }
     </style>
+    <script src="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/js/plugins/mdb-file-upload.min.js"></script>
+    <script>$('.file_upload').file_upload();</script>
 {% endblock %}

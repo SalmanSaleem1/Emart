@@ -1,64 +1,95 @@
 {% extends 'base.html' %}
 {% block content %}
 
-
+    <p>Categories</p>
     <section class="sign-in">
-        <div class="signin-content">
-            <center>
 
 
-                <div class="table-wrapper-scroll-y my-custom-scrollbar">
+        <div class="table-wrapper-scroll-y my-custom-scrollbar">
+            <table class="table table-bordered table-striped mb-0">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Categories</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Create At</th>
+                    <th scope="col">Status</th>
+                </tr>
+                </thead>
+                {% for c in cat %}
+                    <tbody>
+                    <tr>
+                        <th scope="row">{{ c.id }}</th>
+                        <td>{{ c.name }}</td>
+                        <td><img src="{{ url_for('static', filename='images/' +c.image_file) }}"
+                                 class="account-img rounded-circle"></td>
+                        <td>{{ c.create_at.strftime('%Y, %m, %d') }}</td>
 
-                    <table class="table table-bordered table-striped mb-0">
-                        <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Categories</th>
-                            <th scope="col">Sub Categories</th>
-                            <th scope="col">Image</th>
-                            <th scope="col">Create At</th>
-                            <th scope="col">Image</th>
-                            <th scope="col">Action</th>
+                        <td style="text-align: center">
+                            {{ c.deleted }}
+                        </td>
+                    </tr>
+                    </tbody>
+                {% endfor %}
+            </table>
+        </div>
 
-                        </tr>
-                        </thead>
-                        {% for sub_cat in sub_cat %}
-                            <tbody>
-                            <tr>
-                                <th scope="row">{{ sub_cat.id }}</th>
-                                <td>{{ sub_cat.categories_id }}</td>
-                                <td>{{ sub_cat.name }}</td>
-                                <td>{{ sub_cat.image_file }}</td>
-                                <td>{{ sub_cat.create_at.strftime('%Y, %m, %d') }}</td>
-                                <td><img src="{{ url_for('static', filename='images/signup-image.jpg' ) }}"
-                                         class="account-img rounded-circle"></td>
-                                <td style="text-align: center">
-                                    {% if sub_cat.deleted == False %}
-                                        <a>Active</a>
-                                    {% else %}
-                                        <a>InActive</a>
-                                    {% endif %}
-                                </td>
-                            </tr>
-                            </tbody>
-                        {% endfor %}
-                    </table>
+        <style>
+            .my-custom-scrollbar {
+                position: relative;
+                height: 200px;
+                overflow: auto;
+            }
 
-                </div>
-            </center>
-            <style>
-                .my-custom-scrollbar {
-                    position: relative;
-                    height: 200px;
-                    overflow: auto;
-                }
+            .table-wrapper-scroll-y {
+                display: block;
+            }
+        </style>
 
-                .table-wrapper-scroll-y {
-                    display: block;
-                }
-            </style>
     </section>
+    <p>Sub Categories</p>
+    <section class="sign-in">
 
 
+        <div class="table-wrapper-scroll-y my-custom-scrollbar">
+            <table class="table table-bordered table-striped mb-0">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Categories</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Create At</th>
+                    <th scope="col">Status</th>
+                </tr>
+                </thead>
+                {% for c in sub_cat %}
+                    <tbody>
+                    <tr>
+                        <th scope="row">{{ c.id }}</th>
+                        <td>{{ c.name }}</td>
+                        <td><img src="{{ url_for('static', filename='images/' +c.image_file) }}"
+                                 class="account-img rounded-circle"></td>
+                        <td>{{ c.create_at.strftime('%Y, %m, %d') }}</td>
 
+                        <td style="text-align: center">
+                            {{ c.deleted }}
+                        </td>
+                    </tr>
+                    </tbody>
+                {% endfor %}
+            </table>
+        </div>
+
+        <style>
+            .my-custom-scrollbar {
+                position: relative;
+                height: 200px;
+                overflow: auto;
+            }
+
+            .table-wrapper-scroll-y {
+                display: block;
+            }
+        </style>
+    </section>
 {% endblock %}

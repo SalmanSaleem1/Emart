@@ -6,7 +6,7 @@
                 <center>
                     <div class="card" style="width: 25rem;">
                         <div class="card-body">
-                            <form method="post" style="text-align: center">
+                            <form method="post" style="text-align: center" enctype="multipart/form-data" autocomplete="off">
                                 {{ form.hidden_tag() }}
                                 <fieldset>
                                     <legend>Add Sub Category</legend>
@@ -18,8 +18,36 @@
                                             {% endfor %}
                                         </select>
                                     </div>
-                                    <div class="form-group">
-                                        {{ form.subcat_name(placeholder="Your Category", style="text-align: center") }}
+                                    <div>
+                                        {% if form.name.errors %}
+                                            {{ form.name(placeholder="Your sub category", style="text-align: center") }}
+                                            {% for error in form.name.errors %}
+                                                <div class="alert-message block-message error">
+                                        <span class="badge badge-danger">
+                                            {{ error }}
+                                        </span>
+                                                </div>
+                                            {% endfor %}
+                                        {% else %}
+                                            {{ form.name(placeholder="Your sub category", style="text-align: center") }}
+                                        {% endif %}
+                                    </div>
+                                    <div>
+                                        {% if form.image_file.errors %}
+                                            {{ form.image_file(placeholder="Upload Image", class="file_upload") }}
+                                            {% for error in form.image_file.errors %}
+                                                <div class="alert-message block-message error">
+                                        <span class="badge badge-danger">
+                                            {{ error }}
+                                        </span>
+                                                </div>
+                                            {% endfor %}
+                                        {% else %}
+                                            <div class="file-upload-wrapper">
+                                                {{ form.image_file(placeholder="Upload Image", class="file_upload") }}
+                                            </div>
+
+                                        {% endif %}
                                     </div>
                                 </fieldset>
                                 <br>
@@ -31,9 +59,7 @@
                     </div>
                 </center>
             </div>
-
         </div>
-
     </section>
     <h4>Sub category table</h4>
     <hr>
@@ -48,7 +74,7 @@
                 <th scope="col">Image</th>
                 <th scope="col">Create At</th>
                 <th scope="col">Actions</th>
-                <th scope="col">Active/InActive</th>
+                <th scope="col">Status</th>
 
             </tr>
             </thead>
@@ -58,28 +84,24 @@
                     <th scope="row">{{ sub_cat.id }}</th>
                     <td>{{ sub_cat.categories_id }}</td>
                     <td>{{ sub_cat.name }}</td>
-                    <td>{{ sub_cat.image_file }}</td>
+                    <td><img src="{{ url_for('static', filename='images/' + sub_cat.image_file) }}"
+                             class="account-img rounded-circle"></td>
                     <td>{{ sub_cat.create_at.strftime('%Y, %m, %d') }}</td>
                     <td style="text-align: center">
-                        {% if sub_cat.deleted == False %}
-
-                            <a href="{{ url_for('categ.delete_sub_cat', id=sub_cat.id) }}"><i class="fas fa-trash"></i></a>
-                            <a href=""><i class="fas fa-pen-square"></i></a>
-
-                        {% else %}
-
-                            <a href="{{ url_for('categ.delete_sub_cat', id=sub_cat.id) }}"><i class="fas fa-trash"></i></a>
-                            <a href=""><i class="fas fa-pen-square"></i></a>
-
-
-                        {% endif %}
+                        <a href="{{ url_for('categ.delete_sub_cat', id=sub_cat.id) }}"><i class="fas fa-trash"></i></a>
+                        <a href="{{ url_for('categ.update_sub_cat', sub_catID=sub_cat.id ) }}"><i
+                                class="fas fa-pen-square"></i></a>
                     </td>
                     <td>
-                        {% if sub_cat.deleted == False %}
-                            <a href="{{ url_for('categ.active_sub_cat', id=sub_cat.id) }}">Active</a>
-                        {% else %}
-                            <a href="{{ url_for('categ.active_sub_cat', id=sub_cat.id) }}">InActive</a>
-                        {% endif %}
+                        <div class="form-group" style="text-align: center">
+                            {% if sub_cat.deleted == False %}
+                                <a href="{{ url_for('categ.active_sub_cat', id=sub_cat.id) }}">Active <i
+                                        class="fas fa-flag"></i></a>
+                            {% else %}
+                                <a href="{{ url_for('categ.active_sub_cat', id=sub_cat.id) }}">In Active <i
+                                        class="far fa-flag"></i></a>
+                            {% endif %}
+                        </div>
                     </td>
                 </tr>
                 </tbody>
@@ -87,6 +109,8 @@
         </table>
 
     </div>
+    <br>
+    <br>
     <style>
         .my-custom-scrollbar {
             position: relative;
@@ -97,5 +121,8 @@
         .table-wrapper-scroll-y {
             display: block;
         }
+
     </style>
+    <script src="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/js/plugins/mdb-file-upload.min.js"></script>
+    <script>$('.file_upload').file_upload();</script>
 {% endblock %}
