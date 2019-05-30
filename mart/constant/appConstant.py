@@ -38,3 +38,4 @@ class Product():
     DESCRIPTION = "Description"
     NET_PRICE = "Net Price"
     SALE_PRICE = "Sale Price"
+    TOTAL = "Total"

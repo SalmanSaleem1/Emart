@@ -66,8 +66,8 @@
                     <ul class="nav flex-column">
                         <li class="nav-item">
                             <a class="nav-link active">
-                                <a data-feather="home" href="#">
-                                Dashboard </a><span class="sr-only">(current)</span>
+                                <a data-feather="home" href="{{ url_for('dashb.dashboard') }}">
+                                Dashboard</a><span class="sr-only">(current)</span>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -106,9 +106,9 @@
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="{{ url_for('categ.sale') }}">
                                 <span data-feather="users"></span>
-                                Customers
+                                Sale
                             </a>
                         </li>
                         <li class="nav-item">

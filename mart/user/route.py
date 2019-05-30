@@ -9,15 +9,28 @@ from mart.user.utils import send_reset_email
 user = Blueprint('user', __name__)
 
 
-@user.route('/register', methods=[Constant.GET, Constant.POST])
+@user.route('/register', methods=[Constant.POST, Constant.GET])
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
-        hashed_password = bcrypt.generate_password_hash(form.password.data)
-        user = Users(name=form.name.data, username=form.username.data, email=form.email.data,
-                     password=hashed_password)
-        db.session.add(user)
-        db.session.commit()
+
+        hashed_password = bcrypt.generate_password_hash((form.password.data))
+
+        # hashed_password = bcrypt.generate_password_hash(form.password.data)
+        try:
+            user = Users(name=form.name.data, username=form.username.data, email=form.email.data,
+                         password=hashed_password)
+            db.session.add(user)
+            db.session.commit()
+        except:
+            return jsonify({
+                "status": "error",
+                "message": "Could not add user"
+            })
+        # return jsonify({
+        #     "status": "success",
+        #     "message": "User added successfully"
+        # }), 201
         flash(f'{Constant.REGISTER_SUCCESSFULLY}', f'{Constant.INFO_FLASH_MESSAGE}')
         return redirect(url_for('user.login'))
     return render_template('register.html', title='Register', form=form)
@@ -33,7 +46,11 @@ def login():
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user)
             flash(f'{Constant.LOGIN_SUCCESSFULLY}', 'success')
-            return redirect(url_for('main.home'))
+            return jsonify({
+                "status":"success",
+                "message":"login success"
+            })
+            # return redirect(url_for('main.home'))
         else:
             flash(Constant.INVALID_EMAIL_OR_PASSWORD, f'{Constant.DANGER}')
     return render_template('login.html', form=form)
@@ -69,7 +86,7 @@ def reset_token(token):
     return render_template('reset_password.html', title='Reset Password', form=form)
 
 
-@user.route('/logout')
+@user.route('/logout', methods=[Constant.POST])
 def logout():
     logout_user()
     return redirect(url_for('user.login'))

@@ -53,6 +53,8 @@
         </div>
 
     </section>
+    {% if title != 'Update Cat' %}
+    <p>Category Table</p>
     <div class="table-wrapper-scroll-y my-custom-scrollbar">
         <table class="table table-bordered table-striped mb-0">
             <thead>
@@ -98,6 +100,7 @@
             {% endfor %}
         </table>
     </div>
+    {% endif %}
     <br>
     <br>
     <style>

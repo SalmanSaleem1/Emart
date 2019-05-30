@@ -29,7 +29,12 @@ admin.add_view(ModelView(Users, db.session))
 from mart.user.route import user
 from mart.main.route import main
 from mart.categ.route import categ
+from mart.dashboard.route import dashb
+from mart.api.route import api
 
 app.register_blueprint(user)
 app.register_blueprint(main)
 app.register_blueprint(categ)
+app.register_blueprint(dashb)
+app.register_blueprint(api)
+

@@ -37,3 +37,10 @@ class ProductForm(FlaskForm):
     net_price = FloatField(f'{Product.NET_PRICE}', validators=[DataRequired()])
     sale_price = FloatField(f'{Product.SALE_PRICE}', validators=[DataRequired()])
     submit = SubmitField('Submit')
+
+
+class SaleForm(FlaskForm):
+    unit = IntegerField(f'{Product.UNIT}', validators=[DataRequired()])
+    quantity = IntegerField(f'{Product.TOTAL_QUANTITY}', validators=[DataRequired()])
+    total = StringField(f'{Product.TOTAL}')
+    submit = SubmitField('Submit')

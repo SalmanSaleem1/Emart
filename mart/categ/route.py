@@ -2,7 +2,7 @@ from flask import *
 from mart.constant.appConstant import Constant
 from mart.models import Categories, Subcategories, Products
 from mart import db
-from mart.categ.forms import CategoryForm, SubCategoryForm, ProductForm
+from mart.categ.forms import CategoryForm, SubCategoryForm, ProductForm, SaleForm
 from flask_login import login_required
 from mart.categ.utils import save_picture
 
@@ -56,7 +56,7 @@ def add_sub_cat():
         except:
             flash(f'{Constant.IMAGE_FILED_EMPTY}', f'{Constant.DANGER}')
     return render_template('add_sub_cat.html', form=form, categories=categories, sub_catagories=sub_catagories,
-                           title='Add new quote')
+                           title='Add new quote', legend='Add Sub Category')
 
 
 @categ.route('/add_product', methods=[Constant.GET, Constant.POST])
@@ -156,7 +156,7 @@ def update_sub_cat(sub_catID):
         form.image_file.data = sub_cat.image_file
         form.name.data = sub_cat.name
     return render_template('add_sub_cat.html', form=form, categories=categories, sub_catagories=sub_catagories,
-                           title='Update Sub Cat')
+                           title='Update Sub Cat', legend='Update Sub Category')
 
 
 @categ.route('/add_cat/update/<int:my_cat_id>', methods=[Constant.POST, Constant.GET])
@@ -186,3 +186,23 @@ def delete_cat(my_cat_id):
     db.session.delete(cat_delete_id)
     db.session.commit()
     return redirect(url_for('categ.add_cat'))
+
+
+@categ.route('/sale', methods=[Constant.GET, Constant.POST])
+def sale():
+    if request.method == Constant.POST:
+        cat = request.form.get('select_value')
+    else:
+        cat = None
+
+    print(cat)
+    produts = Products.query.all()
+    form = SaleForm()
+    if form.validate_on_submit():
+        try:
+            c = form.unit.data * form.quantity.data
+            form.total.data = c
+            print(c)
+        except:
+            pass
+    return render_template('sale.html', produts=produts, form=form)
