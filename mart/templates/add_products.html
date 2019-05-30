@@ -7,7 +7,7 @@
                     <div class="card" style="width: 25rem;">
                         <div class="card-body">
                             <form method="post" style="text-align: center" enctype="multipart/form-data"
-                                  autocomplete="off">
+                                  autocomplete="off" action="{{ url_for('categ.add_product') }}" id="add_pro">
                                 {{ form.hidden_tag() }}
                                 <fieldset>
                                     <legend>Add Product</legend>
@@ -20,6 +20,8 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
+                                        <label for="name"><i class="fab fa-product-hunt"></i></label>
+                                        <span id="name">
                                         {% if form.name.errors %}
                                             {{ form.name(placeholder="Your name") }}
                                             {% for error in form.name.errors %}
@@ -32,8 +34,11 @@
                                         {% else %}
                                             {{ form.name(placeholder="Your name") }}
                                         {% endif %}
+                                    </span>
                                     </div>
                                     <div class="form-group">
+                                        <label for="quantity"><i class="fas fa-shopping-cart"></i></label>
+                                        <span id="quantity">
                                         {% if form.total_quantity.errors %}
                                             {{ form.total_quantity(placeholder="Your Quantity") }}
                                             {% for error in form.total_quantity.errors %}
@@ -46,8 +51,11 @@
                                         {% else %}
                                             {{ form.total_quantity(placeholder="Your Quantity") }}
                                         {% endif %}
+                                    </span>
                                     </div>
                                     <div class="form-group">
+                                        <label for="unit"><i class="fab fa-uniregistry"></i></label>
+                                        <span id="unit">
                                         {% if form.unit.errors %}
                                             {{ form.unit(placeholder="Unit") }}
                                             {% for error in form.unit.errors %}
@@ -60,8 +68,11 @@
                                         {% else %}
                                             {{ form.unit(placeholder="Unit") }}
                                         {% endif %}
+                                    </span>
                                     </div>
                                     <div class="form-group">
+                                        <label for="net_price"><i class="fas fa-money-bill-alt"></i></label>
+                                        <span id="net_price">
                                         {% if form.net_price.errors %}
                                             {{ form.net_price(placeholder="Net Price") }}
                                             {% for error in form.net_price.errors %}
@@ -74,8 +85,11 @@
                                         {% else %}
                                             {{ form.net_price(placeholder="Net Price") }}
                                         {% endif %}
+                                    </span>
                                     </div>
                                     <div class="form-group">
+                                        <label for="sale_price"><i class="far fa-money-bill-alt"></i></label>
+                                        <span id="sale_price">
                                         {% if form.sale_price.errors %}
                                             {{ form.sale_price(placeholder="Sale Price") }}
                                             {% for error in form.sale_price.errors %}
@@ -88,6 +102,7 @@
                                         {% else %}
                                             {{ form.sale_price(placeholder="Sale Price") }}
                                         {% endif %}
+                                    </span>
                                     </div>
                                     <div class="file-upload-wrapper">
                                         {% if form.image_file.errors %}
@@ -103,9 +118,10 @@
                                             {{ form.image_file(placeholder="Product name", class="file_upload") }}
                                         {% endif %}
                                     </div>
-                                    <div class="form-group">
+                                    <br>
+                                    <div style="width: 100%">
                                         {% if form.description.errors %}
-                                            {{ form.description(placeholder="Description here") }}
+                                            {{ form.description(placeholder="Description here", style="width: 100%") }}
                                             {% for error in form.description.errors %}
                                                 <div class="alert-message block-message error">
                                                     <span class="badge badge-danger">
@@ -114,7 +130,7 @@
                                                 </div>
                                             {% endfor %}
                                         {% else %}
-                                            {{ form.description(placeholder="Product name") }}
+                                            {{ form.description(placeholder="Description here", style="width: 100%") }}
                                         {% endif %}
                                     </div>
                                 </fieldset>
@@ -129,7 +145,6 @@
         </div>
     </section>
     <div class="table-wrapper-scroll-y my-custom-scrollbar">
-
         <table class="table table-bordered table-striped mb-0">
             <thead>
             <tr>
@@ -138,21 +153,24 @@
                 <th scope="col">Product Name</th>
                 <th scope="col">Product Quantity</th>
                 <th scope="col">Product Unit</th>
+                <th scope="col">Product Image</th>
                 <th scope="col">Product Net Price</th>
                 <th scope="col">Product Sale Price</th>
             </tr>
             </thead>
-            {% for cat in products %}
+            {% for pro in products %}
                 <tbody>
                 <tr>
-                    <th scope="row">{{ cat.id }}</th>
-                    <td>{{ cat.name }}</td>
-                    <td><h6>Salman</h6></td>
-                    <td><h6>Salman</h6></td>
-                    <td><h6>Salman</h6></td>
-                    <td><h6>Salman</h6></td>
-                    <td><h6>Salman</h6></td>
+                    <th scope="row">{{ pro.id }}</th>
+                    <td>{{ pro.sub_cat_id }}</td>
+                    <td>{{ pro.name }}</td>
+                    <td>{{ pro.total_quantity }}</td>
+                    <td>{{ pro.unit }}</td>
 
+                    <td><img src="{{ url_for('static', filename='images/' +pro.image_field) }}"
+                             class="account-img rounded-circle"></td>
+                    <td>{{ pro.net_price }}</td>
+                    <td>{{ pro.sale_price }}</td>
                 </tr>
                 </tbody>
             {% endfor %}
@@ -160,7 +178,22 @@
     </div>
     <br>
     <br>
+    <style>
+        .my-custom-scrollbar {
+            position: relative;
+            height: 200px;
+            overflow: auto;
+        }
 
+        .table-wrapper-scroll-y {
+            display: block;
+        }
+    </style>
     <script src="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/js/plugins/mdb-file-upload.min.js"></script>
     <script>$('.file_upload').file_upload();</script>
+    <script>
+        $.post("/save", $('#add_pro').serialize(), function () {
+            alert("success");
+        });
+    </script>
 {% endblock %}
