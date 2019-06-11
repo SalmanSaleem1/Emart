@@ -1,1 +1,1 @@
-web: gunicorn mart.run:app
+web: gunicorn flaskface.run:app
