@@ -32,7 +32,7 @@ class Users(db.Model, UserMixin):
         return Users.query.get(user_id)
 
     def __repr__(self):
-        return f"User '{self.username}', '{self.email}', '{self.password}', '{self.username}'"
+        return f"User('{self.name}', '{self.username}', '{self.email}', '{self.password}')"
 
 
 class Categories(db.Model):

@@ -46,11 +46,11 @@ def login():
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user)
             flash(f'{Constant.LOGIN_SUCCESSFULLY}', 'success')
-            return jsonify({
-                "status":"success",
-                "message":"login success"
-            })
-            # return redirect(url_for('main.home'))
+            # return jsonify({
+            #     "status":"success",
+            #     "message":"login success"
+            # })
+            return redirect(url_for('main.home'))
         else:
             flash(Constant.INVALID_EMAIL_OR_PASSWORD, f'{Constant.DANGER}')
     return render_template('login.html', form=form)
@@ -86,7 +86,7 @@ def reset_token(token):
     return render_template('reset_password.html', title='Reset Password', form=form)
 
 
-@user.route('/logout', methods=[Constant.POST])
+@user.route('/logout', methods=[Constant.POST, Constant.GET])
 def logout():
     logout_user()
     return redirect(url_for('user.login'))

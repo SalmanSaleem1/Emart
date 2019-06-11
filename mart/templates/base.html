@@ -18,12 +18,15 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/Main.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/imagePrivew.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main_account.css') }}">
-
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename = 'css/photos.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename = 'css/main_account.css') }}">
     <link href="{{ url_for('static', filename='side/bootstrap.min.css') }}" rel="stylesheet"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
           integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
     <style>
         .bd-placeholder-img {
             font-size: 1.125rem;
@@ -41,7 +44,6 @@
         }
     </style>
     <!-- Custom styles for this template -->
-    <link href="dashboard.css" rel="stylesheet">
 </head>
 <body>
 
@@ -67,7 +69,7 @@
                         <li class="nav-item">
                             <a class="nav-link active">
                                 <a data-feather="home" href="{{ url_for('dashb.dashboard') }}">
-                                Dashboard</a><span class="sr-only">(current)</span>
+                                    Dashboard</a><span class="sr-only">(current)</span>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -88,7 +90,7 @@
                                 </a>
                                 <ul class="collapse list-unstyled" id="pageSubmenu">
                                     <li class="list-child">
-                                        <a class="" href="{{ url_for('categ.add_sub_cat') }}">Sub Category</a>
+                                        <a id="btn_sub_cat" href="{{ url_for('categ.add_sub_cat') }}">Sub Category</a>
                                         <a href="#productDown" data-toggle="collapse"
                                            aria-expanded="false"
                                            class="dropdown-toggle"
@@ -193,7 +195,10 @@
     .list-child {
         padding-left: 35px;
     }
-
 </style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script>
+
+</script>
 </body>
 </html>

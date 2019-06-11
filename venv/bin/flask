@@ -1,4 +1,6 @@
-#!/home/salman/UniProject/Emart/venv/bin/python
+#!/bin/sh
+'''exec' "/home/salman/Usama Work/Emart/venv/bin/python" "$0" "$@"
+' '''
 # -*- coding: utf-8 -*-
 import re
 import sys
