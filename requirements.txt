@@ -1,16 +1,4 @@
-cryptography==2.6.1
-Django==1.11.20
-enum34==1.1.6
-Flask==1.0.3
-Flask-Bcrypt==0.7.1
-Flask-Login==0.4.1
-Flask-Mail==0.9.1
-Flask-Migrate==2.5.2
-Flask-SQLAlchemy==2.4.0
-Flask-WTF==0.14.2
 fstrings==0.1.0
-gunicorn==19.9.0
-gyp==0.1
 idna==2.8
 ipaddress==1.0.22
 itsdangerous==1.1.0
