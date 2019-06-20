@@ -1,14 +1,4 @@
-fstrings==0.1.0
-idna==2.8
-ipaddress==1.0.22
-itsdangerous==1.1.0
-Jinja2==2.10.1
-jwcrypto==0.6.0
-keyring==10.6.0
 keyrings.alt==3.0
-Mako==1.0.12
-Markdown==2.6.9
-MarkupSafe==1.1.1
 ndg-httpsclient==0.5.1
 npm==0.1.1
 optional-django==0.1.0

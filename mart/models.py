@@ -79,6 +79,7 @@ class PostUser(db.Model):
     title = db.Column(db.String(60), nullable=False)
     content = db.Column(db.String(60))
     status = db.Column(db.Boolean(), default=False)
+    post_at = db.Column(db.DateTime(), default=datetime.now())
 
     def __repr__(self):
-        return f"PostUser('{self.title}', '{self.content}', '{self.status}')"
+        return f"PostUser('{self.title}', '{self.content}', '{self.status}', '{self.post_at}')"
