@@ -5,6 +5,7 @@ from mart.models import Users
 from mart import bcrypt, db
 from flask_login import logout_user, login_user, current_user
 from mart.user.utils import send_reset_email
+from werkzeug.security import generate_password_hash, check_password_hash
 
 user = Blueprint('user', __name__)
 
@@ -14,9 +15,7 @@ def register():
     form = RegisterForm()
     if form.validate_on_submit():
 
-        hashed_password = bcrypt.generate_password_hash((form.password.data))
-
-        # hashed_password = bcrypt.generate_password_hash(form.password.data)
+        hashed_password = generate_password_hash(form.password.data)
         try:
             user = Users(name=form.name.data, username=form.username.data, email=form.email.data,
                          password=hashed_password)
@@ -43,7 +42,7 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = Users.query.filter_by(email=form.email.data).first()
-        if user and bcrypt.check_password_hash(user.password, form.password.data):
+        if user and check_password_hash(user.password, form.password.data):
             login_user(user)
             flash(f'{Constant.LOGIN_SUCCESSFULLY}', 'success')
             # return jsonify({
@@ -78,7 +77,7 @@ def reset_token(token):
         return redirect(url_for('user.reset_request'))
     form = ResetPasswordForm()
     if form.validate_on_submit():
-        hased_password = bcrypt.generate_password_hash(form.password.data)
+        hased_password = generate_password_hash(form.password.data)
         user.password = hased_password
         db.session.commit()
         flash(Constant.PASSWORD_UPDATE, 'success')

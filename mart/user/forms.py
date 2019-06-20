@@ -1,15 +1,24 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, ValidationError
-from wtforms.validators import DataRequired, Email, EqualTo, Length
+from wtforms.validators import DataRequired, Email, EqualTo, Length, Regexp
 from mart.models import Users
 from mart.constant.appConstant import Constant
+import re
 
 
 class RegisterForm(FlaskForm):
     name = StringField(f'{Constant.NAME}', validators=[DataRequired(), Length(min=2, max=25)])
-    username = StringField(f'{Constant.USER_NAME}', validators=[DataRequired(), Length(min=2, max=15)])
-    email = StringField(f'{Constant.EMAIL}', validators=[DataRequired(), Length(min=2, max=25), Email()])
-    password = PasswordField(f'{Constant.PASSWORD}', validators=[DataRequired(), Length(min=2, max=25)])
+    username = StringField(f'{Constant.USER_NAME}',
+                           validators=[DataRequired(), Length(min=2, max=15),
+                                       ])
+    email = StringField(f'{Constant.EMAIL}', validators=[DataRequired(), Length(min=2, max=50), Email(),
+                                                         Regexp(f"{Constant.REGULAR_EXPRESSION_EMAIL}",
+                                                                message=Constant.REGULAR_EXPRESSION_EMAIL_MESSAGE)])
+    password = PasswordField(f'{Constant.PASSWORD}',
+                             validators=[Regexp(f"{Constant.REGULAR_EXPRESSION}",
+                                                message=f"{Constant.REGULAR_EXPRESSION_MESSAGE}"),
+                                         DataRequired(), Length(max=20)
+                                         ])
     confirm_password = PasswordField(f'{Constant.CONFIRM_PASSWORD}', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField(f'{Constant.SUBMIT}')
 
@@ -22,6 +31,12 @@ class RegisterForm(FlaskForm):
         users = Users.query.filter_by(email=email.data).first()
         if users:
             raise ValueError(f'{Constant.EMAIL_ALREADY_EXIST}', f'{Constant.INFO_FLASH_MESSAGE}')
+
+    # def validate(self):
+    #     if re.match('[0-9]', self.password) is None:
+    #         raise ValueError("Make sure your password has a number in it")
+    #     elif re.search('[A-Z]', self.password) is None:
+    #         raise ValueError("Make sure your password has a capital letter in it")
 
 
 class LoginForm(FlaskForm):

@@ -72,3 +72,13 @@ class Products(db.Model):
     def __repr__(self):
         return f"Products('{self.name}', '{self.total_quantity}', '{self.unit}', '{self.image_field}', '{self.net_price}', " \
             f"'{self.sale_price}')"
+
+
+class PostUser(db.Model):
+    id = db.Column('id', db.Integer, primary_key=True)
+    title = db.Column(db.String(60), nullable=False)
+    content = db.Column(db.String(60))
+    status = db.Column(db.Boolean(), default=False)
+
+    def __repr__(self):
+        return f"PostUser('{self.title}', '{self.content}', '{self.status}')"

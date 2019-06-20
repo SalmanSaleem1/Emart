@@ -28,6 +28,11 @@ class Constant(object):
     UPLOAD_IMAGE = "Upload image"
     IMAGE_FILED_EMPTY = "Image preview is empty"
     SAVE_SUCCESSFULLY = "Save Successfully"
+    REGULAR_EXPRESSION = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})"
+    REGULAR_EXPRESSION_EMAIL = "^[a-z]{1,50}_?[0-9]{0,30}@gmail\.com$"
+    REGULAR_EXPRESSION_MESSAGE = "Minimum eight characters, at least one uppercase letter," \
+                                 "one lowercase letter, one number and one special character:"
+    REGULAR_EXPRESSION_EMAIL_MESSAGE = "Email must be end with @gmail.com"
 
 
 class Product():
